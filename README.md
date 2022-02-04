@@ -8,7 +8,7 @@ Terraform Module to set up NewRelic AWS Metric Streams.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13 |
-w
+
 ## Providers
 
 | Name | Version |
