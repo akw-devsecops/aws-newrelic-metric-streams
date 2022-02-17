@@ -32,9 +32,8 @@ resource "aws_iam_role" "newrelic_cloudwatch_firehose_put" {
   tags = var.tags
 }
 
-resource "aws_iam_role_policy" "newrelic_cloudwatch_firehose_put" {
+resource "aws_iam_policy" "newrelic_cloudwatch_firehose_put" {
   name = "TF-MetricStream-FirehoseAccess-${data.aws_region.current.name}"
-  role = aws_iam_role.newrelic_cloudwatch_firehose_put.id
 
   policy = jsonencode({
     "Version" : "2012-10-17",
@@ -51,4 +50,11 @@ resource "aws_iam_role_policy" "newrelic_cloudwatch_firehose_put" {
       }
     ]
   })
+
+  tags = var.tags
+}
+
+resource "aws_iam_role_policy_attachment" "newrelic_cloudwatch_firehose_put" {
+  policy_arn = aws_iam_policy.newrelic_cloudwatch_firehose_put.arn
+  role       = aws_iam_role.newrelic_cloudwatch_firehose_put.name
 }

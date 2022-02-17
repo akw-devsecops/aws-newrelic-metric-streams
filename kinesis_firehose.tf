@@ -46,9 +46,8 @@ resource "aws_iam_role" "newrelic_firehose_s3access" {
   tags = var.tags
 }
 
-resource "aws_iam_role_policy" "newrelic_firehose_s3access" {
+resource "aws_iam_policy" "newrelic_firehose_s3access" {
   name = "TF-Firehose-S3Access-${data.aws_region.current.name}"
-  role = aws_iam_role.newrelic_firehose_s3access.id
 
   policy = jsonencode({
     "Version" : "2012-10-17",
@@ -70,6 +69,13 @@ resource "aws_iam_role_policy" "newrelic_firehose_s3access" {
       }
     ]
   })
+
+  tags = var.tags
+}
+
+resource "aws_iam_role_policy_attachment" "newrelic_firehose_s3access" {
+  policy_arn = aws_iam_policy.newrelic_firehose_s3access.arn
+  role       = aws_iam_role.newrelic_firehose_s3access.name
 }
 
 resource "aws_s3_bucket" "newrelic_firehose_events" {
